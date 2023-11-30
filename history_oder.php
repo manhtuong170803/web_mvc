@@ -4,7 +4,7 @@
 ?>
 <?php
 	$login_check = Session::get('customer_login');
-    if($login_check==false){
+    if($login_check == false){
         header('Location:login.php');
     }
 ?>
@@ -43,7 +43,8 @@
 						<?php
 							$ct = new cart();
 							$fm = new Format();
-							$get_inbox_cart = $ct->get_inbox_cart_history(Session::get('customer_id'));
+							$customer_id = Session::get('customer_id');
+							$get_inbox_cart = $ct->get_inbox_cart_history($customer_id);
 							if($get_inbox_cart){
 								$i = 0;
 								while($result = $get_inbox_cart->fetch_assoc()){

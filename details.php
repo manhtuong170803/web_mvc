@@ -8,10 +8,11 @@
 	  }else{
 		   $id = $_GET['proid'];
 	  }
-	  $customer_id = Session ::get('customer_id');
+	  $customer_id = Session::get('customer_id');
 	  if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['compare'])){
 		$productid = $_POST['productid'];
 		$inserCompare = $product->insertCompare($productid,$customer_id);
+		
 	  }
 	  if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wishlist'])){
 		$productid = $_POST['productid'];
@@ -21,6 +22,7 @@
 		$product_stock = $_POST['product_stock'];
 		$quantity = $_POST['quantity'];
 		$AddtoCart = $ct->add_to_cart($quantity,$product_stock,$id);
+		
 	  }
 	  if(isset($_POST['binhluan_submit'])){
 		$binhluan_insert = $cs->insert_binhluan();
@@ -72,8 +74,10 @@
 						<div class="button-details">
 							<form action="" method="POST">
 							<input type="hidden" name="productid" value="<?php echo $result_details['productId'];?>"/>
+							<input type="hidden" name="customerlogin" class="customer_login" value="<?php echo $login_check = Session::get('customer_login');?>"/>
 							<?php
 								$login_check = Session::get('customer_login');
+								// var_dump($login_check);
     							if($login_check){
        								echo '<input type="submit" class="buysubmit" name="compare" value="Compare Product"/>';
    			 					}else{
@@ -141,7 +145,7 @@
 					<h5>Bình luận sản phẩm</h5>
 					<ul>
 					<?php
-						$get_product_details_2 = $product->get_details($id);
+						$get_product_details_2 = $product->get_details_2($id);
 						if($get_product_details_2){
 							while($result_details2 = $get_product_details_2->fetch_assoc()){
 					

@@ -225,28 +225,48 @@
         }
         // END BACKEND
         public function getproduct_feathered(){
-            $query = "SELECT * FROM tbl_product where type = '0'";
-            $result = $this->db->SELECT($query);
-            return $result;
+            // $sp_everypage = 4;
+            // if(!isset($_GET['page'])){
+            //     $page = 1;
+            // }else{
+            //     $page = $_GET['page'];
+            // }
+            // $everypage = ($page-1)*$sp_everypage;
+            // $query = "SELECT * FROM tbl_product where type = '0' order by productId desc LIMIT $everypage,$sp_everypage";
+            // $result = $this->db->SELECT($query);
+            // return $result;
         }
         public function getproduct_new(){
-            $sp_tungtrang = 4;
-            if(!isset($_GET['trang'])){
-                $trang = 1;
-            }else{
-                $trang = $_GET['trang'];
-            }
-            $tung_trang = ($trang-1)*$sp_tungtrang;
-            $query = "SELECT * FROM tbl_product order by productId desc LIMIT $tung_trang,$sp_tungtrang";
+            // $sp_tungtrang = 4;
+            // if(!isset($_GET['trang'])){
+            //     $trang = 1;
+            // }else{
+            //     $trang = $_GET['trang'];
+            // }
+            // $tung_trang = ($trang-1)*$sp_tungtrang;
+            // $query = "SELECT * FROM tbl_product order by productId desc LIMIT $tung_trang,$sp_tungtrang";
+            // $result = $this->db->SELECT($query);
+            // return $result;
+        }
+        public function get_all_product(){
+            $query = "SELECT * FROM tbl_product order by productId ASC LIMIT 0,4";
             $result = $this->db->SELECT($query);
             return $result;
         }
-        public function get_all_product(){
-            $query = "SELECT * FROM tbl_product";
+        public function get_all_product_2(){
+            $query = "SELECT * FROM tbl_product where type = '0' order by productId ASC LIMIT 0,4";
             $result = $this->db->SELECT($query);
             return $result;
         }
         public function get_details($id){
+            $query = "SELECT tbl_product.*,tbl_category.catName, tbl_brand.brandName
+            FROM tbl_product INNER JOIN tbl_category ON tbl_product.catId = tbl_category.catId
+            INNER JOIN tbl_brand ON tbl_product.brandId = tbl_brand.brandId
+            WHERE tbl_product.productId = '$id'";
+             $result = $this->db->select($query);
+             return $result;
+        }
+        public function get_details_2($id){
             $query = "SELECT tbl_product.*,tbl_category.catName, tbl_brand.brandName
             FROM tbl_product INNER JOIN tbl_category ON tbl_product.catId = tbl_category.catId
             INNER JOIN tbl_brand ON tbl_product.brandId = tbl_brand.brandId
@@ -290,6 +310,7 @@
 
             $check_compare = "SELECT * FROM tbl_compare where productId = '$productid' AND customer_id = $customer_id";
             $result_check_compare = $this->db->select($check_compare);
+            // var_dump($result_check_compare);
             if($result_check_compare){
                 $msg = "<span class='error'>Product Already Added To Compare</span>";
                 return $msg;

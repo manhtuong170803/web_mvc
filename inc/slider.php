@@ -8,7 +8,7 @@
 							while($result = $getLastestdell->fetch_assoc()){
 					?>
 					<div class="listimg listimg_2_of_1">
-						 <a href="preview.php"> <img src="admin/uploads/<?php echo $result['image']; ?>" alt="" /></a>
+						 <a href="details.php?proid=<?php echo $result['productId']; ?>"> <img src="admin/uploads/<?php echo $result['image']; ?>" alt="" /></a>
 					</div>
 				    <div class="text list_2_of_1">
 						<h2>Dell</h2>
@@ -27,7 +27,7 @@
 							while($result = $getLastestSS->fetch_assoc()){
 					?>
 					<div class="listimg listimg_2_of_1">
-						  <a href="preview.php"><img src="admin/uploads/<?php echo $result['image']; ?>" alt="" /></a>
+						  <a href="details.php?proid=<?php echo $result['productId']; ?>"><img src="admin/uploads/<?php echo $result['image']; ?>" alt="" /></a>
 					</div>
 					<div class="text list_2_of_1">
 						  <h2>Samsung</h2>
@@ -48,7 +48,7 @@
 				?>
 				<div class="listview_1_of_2 images_1_of_2">
 					<div class="listimg listimg_2_of_1">
-						<a href="preview.php"><img src="admin/uploads/<?php echo $result['image']; ?>" alt="" /></a>
+						<a href="details.php?proid=<?php echo $result['productId']; ?>"><img src="admin/uploads/<?php echo $result['image']; ?>" alt="" /></a>
 					</div>
 				    <div class="text list_2_of_1">
 						<h2>Oppo</h2>
@@ -67,7 +67,7 @@
 							while($result = $getLastesthw->fetch_assoc()){
 					?>
 					<div class="listimg listimg_2_of_1">
-						  <a href="preview.php"><img src="admin/uploads/<?php echo $result['image']; ?>" alt="" /></a>
+						  <a href="details.php?proid=<?php echo $result['productId']; ?>"><img src="admin/uploads/<?php echo $result['image']; ?>" alt="" /></a>
 					</div>
 					<div class="text list_2_of_1">
 						  <h2></h2>

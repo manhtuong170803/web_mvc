@@ -68,6 +68,12 @@
                         <li><a href="commentlist.php">Liệt kê Bình luận</a> </li>
                     </ul>
                 </li>
+                <li><a class="menuitem">Menu</a>
+                    <ul class="submenu">
+                        <li><a href="menuadd.php">Thêm Menu</a> </li>
+                        <li><a href="menulist.php">Danh sách Menu</a> </li>
+                    </ul>
+                </li>
                
             </ul>
         </div>

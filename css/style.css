@@ -1,3 +1,33 @@
+
+
+@font-face {
+ font-family: 'Nunito Sans';
+ font-weight: 300;
+ src: url('../font/static/NunitoSans_10pt-Light.ttf');
+}
+@font-face {
+	font-family: 'Nunito Sans';
+	font-weight: 400;
+	src: url('../font/static/NunitoSans_10pt-Regular.ttf');
+   }
+   @font-face {
+	font-family: 'Nunito Sans';
+	font-weight: 500;
+	src: url('../font/static/NunitoSans_10pt-Medium.ttf');
+   }
+   @font-face {
+	font-family: 'Nunito Sans';
+	font-weight: 600;
+	src: url('../font/static/NunitoSans_10pt-SemiBold.ttf');
+   }
+   @font-face {
+	font-family: 'Nunito Sans';
+	font-weight: 700;
+	src: url('../font/static/NunitoSans_10pt-Bold.ttf');
+   }
+
+
+
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,nav ul,nav li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
 article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
 ol,ul{list-style:none;margin:0;padding:0;}
@@ -654,41 +684,37 @@ p.note{
 	margin-left:15px;
 }
 .images_1_of_4 .button {
-  float: left;
+  /* float: left;
   line-height: 1.9em;
   margin-top: 0.3em;
-  width: 100%;
+  width: 100%; */
 }
 .images_1_of_4 .button a{
-		padding:7px 20px;
-		font-size:0.8em;
+		padding:6px 12px;
+		/* font-size:0.8em; */
 }
 .images_1_of_4 .button a{
-	font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
-	font-size: 14px;
-	line-height: 15px;
+	/* font-family: "Trebuchet MS",Arial,Helvetica,sans-serif; */
+	width: 100%;
+    display: block;
+    font-size: 14px;
+    line-height: 24px;
 	text-transform: none;
-	color: #737370;
+	color: #000;
 	text-decoration: none!important;
-	background: url(../images/button-bg.png) repeat-x 0 0 #E8E8E8;
 	display: inline-block;
-	border-left: 1px solid #D4D4D4!important;
-	border-right: 1px solid #ADADAD!important;
-	border-top: 1px solid #E0E0E0!important;
-	border-bottom: 1px solid #9C9C9C!important;
 	cursor: pointer!important;
-	margin: 0 2px;
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
+	margin: 0 ;
+	border: 1px solid #000;
+	background:#fff;
 	-webkit-transition: all 0.5s ease;
-		-moz-transition: all 0.5s ease;
-		-o-transition: all 0.5s ease;
-		transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
 }
 .images_1_of_4 .button a:hover{
-     color:#70389C;
-     background: #E8E8E8;
+     color:#fff;
+     background: #000;
 }
 .images_1_of_4 .button span img{
 	position:absolute;
@@ -1449,10 +1475,6 @@ table.tblone img {
 .shopleft img{outline:none}
 .shopleft a,.shopright a{outline:none}
 
-.shopright img {
-  width: 270px;
-  outline:none
-}
 
 .contact-form{
 	position:relative;
@@ -2491,4 +2513,166 @@ input.grey{
 .button-details input[type=submit]{
 	float: left;
 	margin: 0px 5px;
+}
+.section.section-products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
+form.section-from {
+    display: flex;
+	gap: 8px;
+	margin-top: 20px;
+    margin-bottom: 6px;
+}
+
+input.btn.btn-default {
+	font-family: 'Nunito Sans';
+    font-weight: 500;
+	border: 1px solid #000;
+    background: #fff;
+    border-radius: 0px;
+    width: 100%;
+    font-size: 14px;
+    display: inline-block;
+}
+
+input.btn.btn-default:hover {
+    color: #fff;
+    background: #000;
+}
+.grid_1_of_4.images_1_of_4 {
+    width: 100%;
+}
+.images_1_of_4 .button {
+    width: 100%;
+}
+a.details {
+    font-family: 'Nunito Sans';
+    font-weight: 500;
+}
+
+.section-from .btn.active.focus, .section-from .btn.active:focus, 
+.section-from .btn.focus, .section-from .btn:active.focus, .section-from .btn:active:focus, .section-from .btn:focus {
+    outline: unset;
+    outline-offset: unset;
+	color: unset;
+    background-color: unset;
+    border-color: unset;
+	box-shadow: none;
+}
+
+.grid_1_of_4.images_1_of_4 > a {
+    /* background: red; */
+    /* display: block; */
+    min-height: 275px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.page {
+    margin-top: 15px;
+}
+/* .quantity::before{ */
+	/* content: '';
+	display: inline-block;
+	background-repeat: no-repeat;
+	background: #fff;
+	width: 25px;
+	height: 25px;
+	background-image: url('../images/icon-minus.svg'); */
+	/* background-size: 14px;
+	margin: 0 6px -2px 0px; */ 
+/* } */
+/* .quantity::after{
+	content: '';
+	display: inline-block;
+	background-repeat: no-repeat;
+	background: #fff;
+	width: 25px;
+	height: 25px;
+	background-image: url('../images/icon-plus.svg'); */
+	/* /* background-size: 14px;
+	margin: 0 6px -2px 0px; */
+/* } */
+.layout-icon{
+	display: flex;
+	border: 1px solid rgba(0,0,0,.09);
+	align-items: center;
+	background: #fff;
+}
+.layout-icon .layout-icon-plus,
+.layout-icon .layout-icon-minus{
+	width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	position: relative;
+	height: 30px;
+	cursor: pointer;
+}
+.layout-icon-plus::after{
+	content: '';
+    display: inline-block;
+    background-repeat: no-repeat;
+    background: #000;
+    width: 12px;
+    height: 2px;
+}
+form .layout-icon input.quantity[name="quantity"]{
+	width: 100%;
+    border-radius: 0;
+    border-top: none;
+    border-bottom: none;
+    text-align: center;
+	height: 30px;
+}
+form .layout-icon input.quantity[name="quantity"]:focus-visible {
+    outline: none;
+}
+/* Chrome, Safari, Edge, Opera */
+.layout-icon .quantity::-webkit-outer-spin-button,
+.layout-icon .quantity::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.layout-icon .quantity[type=number] {
+  -moz-appearance: textfield;
+}
+
+.layout-icon-minus::before{
+	content: '';
+    display: inline-block;
+    background-repeat: no-repeat;
+    background: #000;
+    width: 12px;
+    height: 2px;
+}
+.layout-icon-minus::after{
+	content: '';
+    display: inline-block;
+    background-repeat: no-repeat;
+    background: #000;
+    width: 2px;
+    height: 12px;
+    position: absolute;
+}
+.shopright img {
+    width: 270px;
+    outline: none;
+    display: none;
+    transition: all 0.4s ease-out;
+}
+.shopright .active img {
+    display: block;
+}
+a.submit-oder.success {
+    display: none;
+}
+.see_more_feature {
+	cursor: pointer;
+}
+.see_more {
+	cursor: pointer;
 }

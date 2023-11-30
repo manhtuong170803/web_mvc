@@ -16,6 +16,7 @@
 	$cs = new customer();
 	$product = new product();
 	$pos = new post();
+	$menu = new menu();
 	
 ?>
 
@@ -66,22 +67,33 @@
 			    </div>
 			    <div class="shopping_cart">
 					<div class="cart">
-						<a href="#" title="View my shopping cart" rel="nofollow">
+						<?php
+						$check_cart = $ct->check_cart();
+						if($check_cart){
+							?>
+							<a href="cart.php" title="View my shopping cart" rel="nofollow">
 								<span class="cart_title">Cart</span>
 								<span class="no_product">
 									<?php 
-										$check_cart = $ct->check_cart();
-										if($check_cart){
-											$sum = Session::get("sum");
-											$qty = Session::get("qty");
-											echo $fm->format_currency($sum).' '.'đ'.'-'.'Qty:'.$qty;
-										}else{
-											echo 'Empty';
-										}
-										
+										$sum = Session::get("sum");
+										$qty = Session::get("qty");
+										//var_dump($sum,$qty);
+										echo $fm->format_currency($sum).' '.'đ'.'-'.'Qty:'.$qty;
 									?>
 								</span>
 							</a>
+							<?php
+							}else{
+								?>
+								<a href="cart.php" title="View my shopping cart" rel="nofollow">
+									<span class="cart_title">Cart</span>
+									<span class="no_product">
+										Empty
+									</span>
+								</a>
+								<?php
+							}
+							?>
 						</div>
 			      </div>
 			<?php
@@ -107,140 +119,105 @@
 	 <div class="clear"></div>
  </div>
 <div class="menu">
-	<!-- <nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<ul class="nav navbar-nav">
-			<li><a href="index.php">Home</a></li>
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					Products
-				<span class="caret"></span></a>
-			<ul class="dropdown-menu">
-			
-				$cate = $cat->show_category();
-				if($cate){
-					while($result_new = $cat->fetch_assoc()){
-			?>
-			<li>
-				<a href="productbycat.php?catid= echo $result_new['catId']?>">echo $result_new['Name']?></a> 
-			</li>
-			
-						}
-					}
-				?>
-			</ul>
-	  		</li>
-			  <li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			Top Brands
-		<span class="caret"></span></a>
-		<ul class="dropdown-menu">
-			
-				$brand = $br->show__brand_home();
-				if($brand){
-					while($result_new = $brand->fetch_assoc()){
-			?>
-			<li>
-				<a href="topbrand.php?brandid= echo $result_new['brandId']?>"> echo $result_new['brandName']?></a>
-			</li>
-			
-						}
-					}
- 			?>
- 		</ul>
-	   </li> 
-	   <li><a href="cart.php">Cart</a></li>
-			</ul>
-		</div>
-	</nav> -->
 	<ul id="dc_mega-menu-orange" class="dc_mm-orange">
-	  <!-- <li><a href="index.php">Home</a></li> -->
-	  <!-- <li><a href="products.php">Products</a> </li> -->
-	  <!-- <li><a href="topbrands.php">Top Brands</a></li> -->
-	  <li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			Products
-			
-		</a>
-		<ul class="dropdown-menu">
-			<?php
-				$cate = $cat->show_category();
-				if($cate){
-					while($result_new = $cate->fetch_assoc()){
-						//var_dump($result_new);
-					?>
-					<li>
-						<a href="productbycat.php?catid=<?php echo $result_new['catId'];?>"><?php echo $result_new['catName'];?></a> 
-					</li>
-					<?php
-					}
-				}
-			?>
-		</ul>
-	  </li> 
-	 <li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			Top Brands
-		</a>
-		<ul class="dropdown-menu">
-			<?php
-				$brand = $br->show__brand_home();
-				if($brand){
-					while($result_new = $brand->fetch_assoc()){
-			?>
-			<li>
-				<a href="topbrand.php?brandid=<?php echo $result_new['brandId']?>"><?php echo $result_new['brandName']?></a>
-			</li>
-			<?php
-						}
-					}
- 			?>
- 		</ul>
-	   </li> 
-	   <li><a href="cart.php">Cart</a></li>
-	  
 	  	<?php
-	 		$check_cart = $ct->check_cart();
-			if($check_cart==true){
-				echo ' <li><a href="cart.php">Cart</a></li>';
-			}else{
-				echo '';
-			}
-		?>
-		<?php
-			$customer_id = Session::get('customer_id');
-			if($customer_id != false){
-				$check_oder = $ct->check_oder($customer_id);
-				if($check_oder==true){
-					echo '<li><a href="oderdetails.php">Ordered</a></li>';
+		$menu_list = $menu->show__menu_home();
+		if($menu){
+			while($result_menu = $menu_list->fetch_assoc()){
+				if($result_menu['menuName'] == 'Products' ){
+					?>
+						<li class="dropdown">
+							<a href="<?php echo $result_menu['menuLink']; ?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $result_menu['menuName']; ?></a>
+							<ul class="dropdown-menu">
+								<?php
+									$cate = $cat->show_category();
+									if($cate){
+										while($result_new = $cate->fetch_assoc()){
+											//var_dump($result_new);
+										?>
+										<li>
+											<a href="productbycat.php?catid=<?php echo $result_new['catId'];?>"><?php echo $result_new['catName'];?></a> 
+										</li>
+										<?php
+										}
+									}
+								?>
+							</ul>
+						</li> 
+					<?php
+				}else if($result_menu['menuName'] == 'Top Brands' ){
+					?>
+						<li class="dropdown">
+							<a href="<?php echo $result_menu['menuLink']; ?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $result_menu['menuName']; ?></a>
+							<ul class="dropdown-menu">
+								<?php
+									$brand = $br->show__brand_home();
+									if($brand){
+										while($result_new = $brand->fetch_assoc()){
+											?>
+											<li>
+												<a href="topbrand.php?brandid=<?php echo $result_new['brandId']?>"><?php echo $result_new['brandName']?></a>
+											</li>
+											<?php
+										}
+									}
+										
+								?>
+							</ul>
+					</li>  
+					<?php
 				}else{
-					echo '';
+					if($result_menu['menuName'] == 'Cart' ){
+						$check_cart = $ct->check_cart();
+						if($check_cart==true){
+							?>
+								<li><a href="<?php echo $result_menu['menuLink']; ?>"><?php echo $result_menu['menuName']; ?></a></li> 
+							<?php
+						}
+					}else{
+						?>
+							<li><a href="<?php echo $result_menu['menuLink']; ?>"><?php echo $result_menu['menuName']; ?></a></li> 
+						<?php
+					}
+					
 				}
 			}
+		}
 		?>
+			<?php
+				// $customer_id = Session::get('customer_id');
+				// if($customer_id != false){
+				// 	$check_oder = $ct->check_oder($customer_id);
+				// 	if($check_oder==true){
+				// 		echo '<li><a href="oderdetails.php">Ordered</a></li>';
+				// 	}else{
+				// 		echo '';
+				// 	}
+				// }
+			?>
 
-		<?php
-			$login_check = Session::get('customer_login');
-			if($login_check==false){
-				echo '';
-			}else{
-				echo '<li><a href="profile.php">Profile</a> </li>';
-				echo '<li><a href="history_oder.php">Đơn đặt hàng</a> </li>';
-			}
-		?>
-		<?php
-			$login_check = Session::get('customer_login');
-    		if($login_check){
-       			echo '<li><a href="compare.php">Compare</a></li>';
-   			 }
-		?>
-		<?php
-			$login_check = Session::get('customer_login');
-    		if($login_check){
-       			echo '<li><a href="wishlist.php">Wishlist</a></li>';
-   			 }
-		?>
-	  <li><a href="contact.php">Contact</a> </li>
+			<?php
+				// $login_check = Session::get('customer_login');
+				// if($login_check==false){
+				// 	echo '';
+				// }else{
+				// 	echo '<li><a href="profile.php">Profile</a> </li>';
+				// 	echo '<li><a href="history_oder.php">Đơn đặt hàng</a> </li>';
+				// }
+			?>
+			<?php
+				// $login_check = Session::get('customer_login');
+				// if($login_check){
+				// 	echo '<li><a href="compare.php">Compare</a></li>';
+				// }
+			?>
+			<?php
+				// $login_check = Session::get('customer_login');
+				// if($login_check){
+				// 	echo '<li><a href="wishlist.php">Wishlist</a></li>';
+				// }
+			?>
+		<!-- <li><a href="contact.php">Contact</a> </li> -->
 	  <div class="clear"></div>
 	</ul>
 </div>

@@ -22,12 +22,33 @@
             $product_stock = mysqli_real_escape_string($this->db->link, $product_stock);
             $id = mysqli_real_escape_string($this->db->link, $id);
             $sId = session_id();
+            // var_dump($sId);
             $check_cart = "SELECT * FROM tbl_cart WHERE productId = '$id' AND sId = '$sId'";
             $result_check_cart = $this->db->select($check_cart);
             if($quantity <= $product_stock){//nếu sl đặt nhỏ hơn sl có trong kho
+                
                 if($result_check_cart){
-                    $msg = "<span class='error'>Sản phẩm đã được thêm vào</span>";
-                    return $msg;
+                    $result_check_cart = $result_check_cart->fetch_assoc();
+                     $quantity_update = $result_check_cart['quantity'] + $quantity;
+                    if($quantity_update <= $product_stock){
+                        $query = "UPDATE `tbl_cart` SET `quantity` = '$quantity_update' WHERE productId = '$id' AND sId = '$sId'";
+                        $result = $this->db->update($query);
+                    }else{
+                        $msg = "<span class='error'>Số lượng tồn kho không đủ.</span>";
+                        return $msg;
+                    }
+
+
+
+                    
+                    // khi vào trường hợp này sản phẩm sẽ thêm 1 đơn vị
+                    /*
+                    1, kiểm tra xem trong database số lượng hiện tại là bao nhiêu $check_cart['quantity'] = 1
+                    2, cập nhật dữ liệu của product trong cart
+                        $quantity_update = $check_cart['quantity'] + 1 
+                        UPDATE `tbl_cart` SET `quantity` = ' $quantity_update' WHERE productId = '$id' AND sId = '$sId';
+                    */
+                    // $sId,$id
                 }else{
                     $query = "SELECT * FROM tbl_product where productId = '$id'";
                     $result = $this->db->select($query)->fetch_assoc();
@@ -105,7 +126,7 @@
         }
         public function dell_all_data_cart(){
             $sId = session_id();
-            $query = "DELETE FROM tbl_cart WHERE sId = '$sId'";
+            $query = "DELETE FROM tbl_cart WHERE sId = '$sId' AND status = '1';";
             $result = $this->db->delete($query);
             return $result; 
         }
@@ -117,7 +138,7 @@
         }
         public function insertOder($customer_id){
             $sId = session_id();
-            $query = "SELECT * FROM tbl_cart WHERE sId = '$sId'";//chọn sản phẩm từ giỏ hàng
+            $query = "SELECT * FROM `tbl_cart` WHERE `sId` LIKE '$sId' AND `status` = 1";//chọn sản phẩm từ giỏ hàng
             $get_product = $this->db->select($query);
             $oder_code = rand(0000,9999);
             //$customer_id = $customer_id;
@@ -135,6 +156,7 @@
                     $query_oder = "INSERT INTO `tbl_oder`(`oder_code`,`productId`, `productName`, `quantity`, `price`, `image`, `customer_id`) VALUES ('$oder_code','$productid',
                     '$productName','$quantity','$price','$image','$customer_id')";
                     $insert_oder = $this->db->insert($query_oder);
+                    //var_dump($insert_oder);
                 }
             }
         }
@@ -154,7 +176,7 @@
             return $get_inbox_cart;
         }
         public function get_inbox_cart_history($customer_id){
-            $query = "SELECT * FROM tbl_placed, tbl_customer WHERE tbl_placed.customer_id=tbl_customer.id AND tbl_placed.customer_id=$customer_id ORDER BY date_created";
+            $query = "SELECT * FROM tbl_placed, tbl_customer WHERE tbl_placed.customer_id=tbl_customer.id AND tbl_placed.customer_id=$customer_id ORDER BY date_created DESC";
             $get_inbox_cart = $this->db->select($query);
             return $get_inbox_cart;
         }

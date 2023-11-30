@@ -14,6 +14,7 @@
 <?php
 	if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])){
 	   $login_Customers = $cs->login_customers($_POST);
+	   header('Location:oder.php');
 	 }
 ?>
 

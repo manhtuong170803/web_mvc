@@ -33,11 +33,10 @@
 						if(isset($update_quantity_cart)){
 							echo $update_quantity_cart;
 						}
-					?>
-						<?php
 						if(isset($delcart)){
 							echo $delcart;
 						}
+						$active = false;
 					?>
 						<table class="tblone">
 							<tr>
@@ -45,7 +44,7 @@
 								<th width="20%">Product Stock</th>
 								<th width="10%">Image</th>
 								<th width="15%">Price</th>
-								<th width="25%">Quantity</th>
+								<th width="15%">Quantity</th>
 								<th width="20%">Total Price</th>
 								<th width="10%">Buy</th>
 								<th width="10%">Action</th>
@@ -55,38 +54,53 @@
 								if($get_product_cart){
 									$subtotal = 0;
 									$qty = 0;
+
 									while($result = $get_product_cart->fetch_assoc()){
-							?>
-							<tr>
-								<td><?php echo $result['productName']; ?></td>
-								<td><?php echo $result['stock']; ?></td>
-								<td><img src="admin/uploads/<?php echo $result['image']; ?>" alt=""/></td>
-								<td><?php echo $fm->format_currency($result['price'])." "."VND"?></td>
-								<td>
-									<form action="" method="post">
-										<input type="hidden" name="cartId" value="<?php echo $result['cartId'];?>"/>
-										<input type="hidden" name="stock" value="<?php echo $result['stock']; ?>"/>
-										<input type="number" name="quantity" min="0" value="<?php echo $result['quantity']; ?>"/>
-										<input type="submit" name="submit" value="Update"/>
-									</form>
-								</td>
-								<td><?php 
-									$total = $result['price'] * $result['quantity'];
-									echo $fm->format_currency($total)." "."VND";
-								?></td>
-								<td>
-									<div class="form-check">
-										<input class="form-check-input buy_checked"
-										<?php echo $result['status']==1 ?'checked' : '';?>
-										 type="checkbox" value="<?php echo $result['cartId'];?>" id="defaultCheck1">
-										<label class="form-check-label" for="defaultCheck1">
-											Mua hàng
-										</label>
-									</div>
-								</td>
-								<td><a onclick="return confirm('bạn có muốn xoá không?');" href="?cartid=<?php echo $result['cartId']; ?>">Xoá</a></td>
-							</tr>
-							<?php
+										if($result['status']==1){
+											$active = true;
+										}
+										
+									?>
+									<tr>
+										<td><?php echo $result['productName']; ?></td>
+										<td><?php echo $result['stock']; ?></td>
+										<td><img src="admin/uploads/<?php echo $result['image']; ?>" alt=""/></td>
+										<td><?php echo $fm->format_currency($result['price'])." "."VND"?></td>
+										<td>
+											<form action="" method="post">
+												<input type="hidden" name="cartId" value="<?php echo $result['cartId'];?>"/>
+												<input type="hidden" name="stock" value="<?php echo $result['stock']; ?>"/>
+												<div class="layout-icon check-icon">
+													<div class="layout-icon-plus"></div>
+													<input type="number" class="quantity" name="quantity" min="1" value="<?php echo $result['quantity']; ?>"/>
+													<div class="layout-icon-minus"></div>
+												</div>
+												<!-- <input type="number" name="quantity" min="0" value="<?php //echo $result['quantity']; ?>"/> 
+												<input type="submit" name="submit" value="Update"/> -->
+											</form>
+										</td>
+										<td>
+											<?php 
+											$total = $result['price'] * $result['quantity'];
+											echo $fm->format_currency($total)." "."VND";
+											?>
+										</td>
+										<td>
+											<div class="form-check">
+												<input class="form-check-input buy_checked"
+												<?php echo $result['status']==1 ?'checked' : '';?>
+												type="checkbox" value="<?php echo $result['cartId'];?>" id="defaultCheck1">
+												<label class="form-check-label" for="defaultCheck1">
+													Mua hàng  
+												</label>
+											</div>
+										</td>
+										<td>
+											<input type="hidden" name="cartId" value="<?php echo $result['cartId'];?>"/>
+											<a  class="delete" href="?cartid=<?php echo $result['cartId']; ?>">Xoá</a>
+										</td>
+									</tr>
+									<?php
 									$subtotal += $total;
 									$qty = $qty + $result['quantity'];
 									}
@@ -100,7 +114,7 @@
 						<table style="float:right;text-align:left;" width="40%">
 							<tr>
 								<th>Sub Total : </th>
-								<td><?php
+								<td class="subtotal_td"><?php
 								 	echo $fm->format_currency($subtotal)." "."VND";
 									Session::set('sum',$subtotal);
 									Session::set('qty',$qty);
@@ -112,7 +126,7 @@
 							</tr>
 							<tr>
 								<th>Grand Total :</th>
-								<td><?php
+								<td class="grandtotal_td"><?php
 									$vat = $subtotal * 0.1;
 									$gtotal = $subtotal + $vat;
 									echo $fm->format_currency($gtotal)." "."VND";
@@ -124,13 +138,14 @@
 								echo 'You Cart Is Empty ! Plaease Shopping Now';
 							}
 					   ?>
+					   
 					</div>
 					<div class="shopping">
 						<div class="shopleft">
 							<a href="index.php"> <img src="images/shop.png" alt="" /></a>
 						</div>
 						<div class="shopright">
-							<a href="payment.php"> <img src="images/check.png" alt="" /></a>
+							<a href="payment.php" class="checkout-a <?php echo ($active==true ?'active' : '');?>"> <img src="images/check.png" alt="" /></a>
 						</div>
 					</div>
     	</div>  	

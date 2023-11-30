@@ -5,7 +5,7 @@
 
     $db = new Database();
     $id_cart = $_POST['id_cart'];
-    $cart_status = $_POST['cart_status'];
+    $cart_status = $_POST['cart_status']; 
     $query = "UPDATE tbl_cart SET tbl_cart.status = '$cart_status' WHERE cartId = '$id_cart'";
     $result = $db->Update($query);
     if($result){

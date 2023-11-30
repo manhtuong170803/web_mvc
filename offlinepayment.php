@@ -5,6 +5,7 @@
 <?php
 	   if(isset($_GET['oderid']) && $_GET['oderid']=='oder'){
 		$customer_id = Session::get('customer_id');
+        //var_dump($customer_id);
         $insertOrder = $ct->insertOder($customer_id);
         $delCart = $ct->dell_all_data_cart();
         // header('Location:success.php');
@@ -68,19 +69,18 @@
                         $get_product_cart = $ct->get_product_cart_checkout();
                         $subtotal = 0;
                         if($get_product_cart){
-                            
                             $qty = 0;
                             $i = 0;
                             
                             while($result = $get_product_cart->fetch_assoc()){
                                 $i++;
                                 ?>
-                                <tr>
+                                <tr class="tblone_tr">
                                     <td><?php echo $i; ?></td>
                                     <td><?php echo $result['productName']; ?></td>
-                                    <td><?php echo $fm->format_currency($result['price'])." "."VND"?></td>
+                                    <td><?php echo $fm->format_currency($result['price'])." "."VND";?></td>
                                     <td>
-                                            <?php echo $result['quantity']; ?>
+                                        <?php echo $result['quantity']; ?> 
                                     </td>
                                     <td><?php 
                                         $total = $result['price'] * $result['quantity'];
@@ -100,7 +100,7 @@
                     $check_cart = $ct->check_cart();
                     if($check_cart && $subtotal){				
                         ?>
-                        <table style="float:right;text-align:left;margin:5px;" width="40%">
+                        <table style="float:right;text-align:left;margin:5px;" width="40%" class="tbbottom">
                             <tr>
                                 <th>Sub Total : </th>
                                 <td>
@@ -125,21 +125,21 @@
                                     echo $fm->format_currency($gtotal).' '.'VNĐ';
                                 ?> </td>
                             </tr>
-                    </table>
-                    <?php
+                        </table>
+                        <?php
                     }else{
                         echo 'You Cart Is Empty ! Plaease Shopping Now';
                     }
-                ?>
+                        ?>
 				</div>
             </div>
             <div class="box-right">
             <table class="tblone">
                 <?php
-                    $id = Session::get('customer_id');
-                    $get_customers = $cs->show_customers($id);
-                    if($get_customers){
-                        while($result = $get_customers->fetch_assoc()){
+                  $id = Session::get('customer_id');
+                  $get_customers = $cs->show_customers($id);
+                  if($get_customers){
+                      while($result = $get_customers->fetch_assoc()){
                 ?>
                 <tr>
                     <td>Name</td>
@@ -156,11 +156,6 @@
                     <td>:</td>
                     <td><?php echo $result['phone']; ?></td>
                 </tr>
-                <!-- <tr>
-                    <td>Country</td>
-                    <td>:</td>
-                    <td></td>
-                </tr> -->
                 <tr>
                     <td>Zipcode</td>
                     <td>:</td>
